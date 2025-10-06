@@ -1,0 +1,33 @@
+name: 🚀 Déploiement sur OVH via FTP
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📦 Récupération du dépôt
+        uses: actions/checkout@v4
+
+      - name: 🧰 Installation Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 🏗️ Build du site (Vite)
+        run: |
+          npm ci
+          npm run build
+
+      - name: 🌐 Déploiement FTP vers OVH
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.OVH_HOST }}
+          username: ${{ secrets.OVH_USER }}
+          password: ${{ secrets.OVH_PASS }}
+          server-dir: ${{ secrets.OVH_PATH }}
+          local-dir: dist
+          dangerous-clean-slate: true
