@@ -28,6 +28,6 @@ jobs:
           server: ${{ secrets.OVH_HOST }}
           username: ${{ secrets.OVH_USER }}
           password: ${{ secrets.OVH_PASS }}
-          server-dir: ${{ secrets.OVH_PATH }}
-          local-dir: dist
+          server-dir: ${{ secrets.OVH_PATH }}/
+          local-dir: dist/
           dangerous-clean-slate: true
